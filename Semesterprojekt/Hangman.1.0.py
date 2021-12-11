@@ -61,42 +61,85 @@ def gamerules():
 
 def youvscpu():
 
-    alphabet = ["a"],["b"],["c"],["d"],["e"],["f"],["g"],["h"],["i"],["j"],["k"],["l"],["m"],["n"],["o"],["p"],["q"],["r"],["s"],["t"],["u"],["v"],["w"],["x"],["y"],["z"]
-
     word = input("Word to be guessed:")
     print(f"To be guessed: {word}")
 
     wordarr = list(word)
 
-    guessin = []*len(word)
-
     wrong = []
 
-    buchstabe = random.choice(alphabet)
+    guessin = [] #*len(word)
 
-    while guessin != wordarr:
+    guessable = ["a"],["b"],["c"],["d"],["e"],["f"],["g"],["h"],["i"],["j"],["k"],["l"],["m"],["n"],["o"],["p"],["q"],["r"],["s"],["t"],["u"],["v"],["w"],["x"],["y"],["z"]
+
+    cpuguess(wordarr, guessin, wrong, guessable)
+
+
+
+
+def cpuguess(wordarr, guessin, wrong, guessable):
+
+    alphabet = ["a"],["b"],["c"],["d"],["e"],["f"],["g"],["h"],["i"],["j"],["k"],["l"],["m"],["n"],["o"],["p"],["q"],["r"],["s"],["t"],["u"],["v"],["w"],["x"],["y"],["z"]
     
-        while buchstabe in wrong or buchstabe in wordarr and len(wrong) != len(alphabet):
-            buchstabe = random.choice(alphabet)
+    print(f"Wrong guesses: {wrong}")
+    print(f" erratbar {guessable}")
+    print(f"This far: {guessin}")
+    
 
-        print("Is",buchstabe, "present in your word?")
 
-        choose = (input("(1) Yes or (0) No?\n"))
+    #guessable und wrong voneinanader abziehen um Buchstaben zu bekommen die geraten werden koennen
+    
+    #Richtig geratene Worte werden nicht abgezogen und koennen nicht ausgegeben werden
+    #muss das gleiche sein wie bei wrong -> nochmal anschauen is in 116 bei if choice str y etc.
 
-        if choose == str(1):
+    for i in range(0,1):
 
-            for i in range(0,len(word)):
-                if wordarr[i] == buchstabe:
+        guessable = []
 
-                    guessin[i] = buchstabe
+        for i in range(len(alphabet)):
 
-            print(f"{guessin}")
+            if alphabet[i] in wrong:
+                pass
+            elif alphabet[i] in guessin:
+                pass
 
-        elif choose == str(0):
-            wrong.append(buchstabe)
-            print(f"wrong {wrong}")
-                 
-    print("You didn't choose an english word, did you?")
+            elif alphabet[i] in guessable:
+                pass
+            elif alphabet[i] in guessin:
+                pass
+
+            else:
+                guessable.append(alphabet[i])
+            
+
+    
+    if guessin != wordarr:
+        guess = random.choice(guessable)
+
+        print(f"Is {guess} part of the word?")
+        choice = input("y/n\n")
+
+        if choice == str("y"):
+            for i in range(0, len(wordarr)):
+                if wordarr[i] == guess:
+                    guessin[i] = guess
+                    cpuguess(wordarr, guessin, wrong, guessable)
+                else:
+                    pass
+
+            cpuguess(wordarr, guessin, wrong, guessable)
+
+        elif choice == str("n"):
+            wrong.append(guess)
+            cpuguess(wordarr, guessin, wrong, guessable)
+
+    elif guessin == wordarr:
+        print(f"I've found your word! It's {wordarr}")
+
+    
+
+
+
     
 def cpuvsyou(choice, life):
     os.system('cls||clear')
