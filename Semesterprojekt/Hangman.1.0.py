@@ -1,6 +1,5 @@
 # 21.11.2021
-#kk
-# cloned
+
 
 import random #random picks something from a list at random
 import time
