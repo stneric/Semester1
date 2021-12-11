@@ -1,6 +1,6 @@
 # 21.11.2021
 
-# cloned
+# cloned and again
 
 import random #random picks something from a list at random
 import time
