@@ -1,5 +1,5 @@
 # 21.11.2021
-
+#
 import random #random picks something from a list at random
 import time
 import os 
