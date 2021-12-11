@@ -1,10 +1,3 @@
-# 21.11.2021
-<<<<<<< HEAD
-#
-=======
-
-
->>>>>>> 6f4ef86a42b211c61b03c539ac023ebc026042ee
 import random #random picks something from a list at random
 import time
 import os 
