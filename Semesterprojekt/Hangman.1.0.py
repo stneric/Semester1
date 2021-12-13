@@ -92,29 +92,25 @@ def cpuguess(wordarr, guessin, wrong, guessable):
     #Richtig geratene Worte werden nicht abgezogen und koennen nicht ausgegeben werden
     #muss das gleiche sein wie bei wrong -> nochmal anschauen is in 116 bei if choice str y etc.
 
-    for i in range(1): #Guessable soll geleert werden um aktuelle Buschtaben anzuzeigen
 
-        guessable = [""]
 
-        while i < len(alphabet):
+    alreadyguessed = []
+    
 
-            if alphabet[i] in wrong:
-                i += 1
-            elif alphabet[i] in guessin:
-                i += 1
-
-            elif alphabet[i] in guessable:
-                i += 1
-            elif alphabet[i] in guessin:
-                i += 1
-
+    for i in range(1):
+        guessable = []
+        for i in range(0, len(alphabet)):
+            if alphabet[i] in alreadyguessed:
+                pass
             else:
                 guessable.append(alphabet[i])
+     
             
 
     
     if guessin != wordarr:
         guess = random.choice(guessable)
+        alreadyguessed.append(alreadyguessed)
 
         print(f"Is {guess} part of the word?")
         choice = input("y/n\n")
