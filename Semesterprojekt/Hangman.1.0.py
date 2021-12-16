@@ -97,7 +97,7 @@ def cpuguess(wordarr, guessin, wrong, guessable):
     alreadyguessed = []
     
 
-    for i in range(1):
+    for i in range(0):
         guessable = []
         for i in range(0, len(alphabet)):
             if alphabet[i] in alreadyguessed:
