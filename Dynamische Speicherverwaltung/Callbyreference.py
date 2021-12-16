@@ -1,6 +1,7 @@
 def tu_was(listename):
     listename.append(4)
 
+
 liste = [1, 2, 3]
 print(liste)
 tu_was(liste)
@@ -15,3 +16,5 @@ zahl = 0
 print(zahl)
 tu_was_int(zahl)
 print(zahl)
+
+#hat eig nix mit dynamischer Speicherverwaltung zu tun 
