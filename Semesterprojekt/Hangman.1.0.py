@@ -66,51 +66,43 @@ def youvscpu():
 
     wordarr = list(word)
 
-    wrong = []
+    alrguessed = []
 
     guessin = [] #*len(word)
 
     guessable = ["a"],["b"],["c"],["d"],["e"],["f"],["g"],["h"],["i"],["j"],["k"],["l"],["m"],["n"],["o"],["p"],["q"],["r"],["s"],["t"],["u"],["v"],["w"],["x"],["y"],["z"]
 
-    cpuguess(wordarr, guessin, wrong, guessable)
+    cpuguess(wordarr, guessin, alrguessed, guessable)
 
 
 
 
-def cpuguess(wordarr, guessin, wrong, guessable):
-
-    alphabet = ["a"],["b"],["c"],["d"],["e"],["f"],["g"],["h"],["i"],["j"],["k"],["l"],["m"],["n"],["o"],["p"],["q"],["r"],["s"],["t"],["u"],["v"],["w"],["x"],["y"],["z"]
+def cpuguess(wordarr, guessin, alrguessed, guessable):
     
-    print(f"Wrong guesses: {wrong}")
     print(f" erratbar {guessable}")
     print(f"This far: {guessin}")
     
 
+    checkwithlist = []
 
-    #guessable und wrong voneinanader abziehen um Buchstaben zu bekommen die geraten werden koennen
-    
-    #Richtig geratene Worte werden nicht abgezogen und koennen nicht ausgegeben werden
-    #muss das gleiche sein wie bei wrong -> nochmal anschauen is in 116 bei if choice str y etc.
+    for i in guessable:
+        
+        #??????? -> TypeError: tuple indices must be integers or slices, not list
+        if guessable[i] in alrguessed:
+            guessable[i] = 0
+
+        else:
+            checkwithlist.append(guessable[i])
 
 
+    if guessin != wordarr and alrguessed <= 26:
+        
+        guess = random.choice(checkwithlist)
+        
+        alrguessed.append(guess)
 
-    alreadyguessed = []
-    
-
-    for i in range(0):
-        guessable = []
-        for i in range(0, len(alphabet)):
-            if alphabet[i] in alreadyguessed:
-                pass
-            else:
-                guessable.append(alphabet[i])
-     
-            
-
-    
-    if guessin != wordarr:
-        guess = random.choice(guessable)
-        alreadyguessed.append(alreadyguessed)
+        #nur ein Sanity Check
+        print(f"Already guessed {alrguessed}")
 
         print(f"Is {guess} part of the word?")
         choice = input("y/n\n")
@@ -120,15 +112,15 @@ def cpuguess(wordarr, guessin, wrong, guessable):
                 if wordarr[i] == guess:
                     guessin[i] = guess
                     
-                    cpuguess(wordarr, guessin, wrong, guessable)
+                    cpuguess(wordarr, guessin, alrguessed, guessable)
                 else:
                     pass
 
-            cpuguess(wordarr, guessin, wrong, guessable)
+            cpuguess(wordarr, guessin, alrguessed, guessable)
 
         elif choice == str("n"):
-            wrong.append(guess)
-            cpuguess(wordarr, guessin, wrong, guessable)
+            alrguessed.append(guess)
+            cpuguess(wordarr, guessin, alrguessed, guessable)
 
     elif guessin == wordarr:
         print(f"I've found your word! It's {wordarr}")
