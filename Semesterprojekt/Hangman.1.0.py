@@ -68,7 +68,6 @@ def cpuloses(life):
     print("I've lost :(")
     backtomenu()
 
-
 def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
 
     print(f"Life: {life}")
@@ -116,7 +115,6 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
         guessable = []  #set to empty again, for repopulation
         cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed)
 
-
 def youvscpu():
 
     guess = input("What word should be guessed?\n")
@@ -130,8 +128,7 @@ def youvscpu():
     life = 6
 
     cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed)
-
-    
+ 
 def cpuvsyou(choice, life):
     os.system('cls||clear')
     length = ""
