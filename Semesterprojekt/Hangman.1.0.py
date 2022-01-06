@@ -60,75 +60,76 @@ def gamerules():
     
     #cpuvsyou(choice, life)
 
-def youvscpu():
+def cpuwins(life):
+    print("I've won!!")
+    backtomenu()
 
-    word = input("Word to be guessed:")
-    print(f"To be guessed: {word}")
-
-    wordarr = list(word)
-
-    alrguessed = []
-
-    guessin = [] #*len(word)
-
-    guessable = ["a"],["b"],["c"],["d"],["e"],["f"],["g"],["h"],["i"],["j"],["k"],["l"],["m"],["n"],["o"],["p"],["q"],["r"],["s"],["t"],["u"],["v"],["w"],["x"],["y"],["z"]
-
-    cpuguess(wordarr, guessin, alrguessed, guessable)
+def cpuloses(life):
+    print("I've lost :(")
+    backtomenu()
 
 
+def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
 
+    print(f"Life: {life}")
 
-def cpuguess(wordarr, guessin, alrguessed, guessable):
+    if life == 0:
+        cpuloses(life)
     
-    print(f" erratbar {guessable}")
-    print(f"This far: {guessin}")
-    
+    else:
+        pass
 
-    checkwithlist = []
-
-    for i in guessable:
-        
-        #??????? -> TypeError: tuple indices must be integers or slices, not list
-        if i in alrguessed:
-            guessable[i] = "ß"
+    #add letter to alreadyguessed
+    for i in range(0,len(everyletter)):
+        check = everyletter[i]
+        if check in alreadyguessed:
+            i = i+1
 
         else:
-            checkwithlist.append(i)
+            guessable.append(everyletter[i])
+
+    print(guessable) #check, if it worked
+            
+    letter = random.choice(guessable)
+
+    print(f"is {letter} in the word?\n")
+    choice = input("y/n\n")
+
+    if choice == str("y"):
+        alreadyguessed.append(letter)
+        #check where the letter stands
+        for i in range(0,len(tobeguessed)):
+            if tobeguessed[i] == letter:
+                progress[i] = letter
+
+    elif choice == str("n"):
+        alreadyguessed.append(letter)
+        life = life-1
 
 
-    if guessin != wordarr and alrguessed <= 26:
-        
-        guess = random.choice(checkwithlist)
-        
-        alrguessed.append(guess)
+    print(f"so far: {progress}")
 
-        #nur ein Sanity Check
-        print(f"Already guessed {alrguessed}")
+    if progress == tobeguessed:
+        cpuwins(life)
 
-        print(f"Is {guess} part of the word?")
-        choice = input("y/n\n")
-
-        if choice == str("y"):
-            for i in range(0, len(wordarr)):
-                if wordarr[i] == guess:
-                    guessin[i] = guess
-                    
-                    cpuguess(wordarr, guessin, alrguessed, guessable)
-                else:
-                    pass
-
-            cpuguess(wordarr, guessin, alrguessed, guessable)
-
-        elif choice == str("n"):
-            alrguessed.append(guess)
-            cpuguess(wordarr, guessin, alrguessed, guessable)
-
-    elif guessin == wordarr:
-        print(f"I've found your word! It's {wordarr}")
-
-    
+    else:
+        guessable = []  #set to empty again, for repopulation
+        cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed)
 
 
+def youvscpu():
+
+    guess = input("What word should be guessed?\n")
+    tobeguessed = list(guess)
+
+    #every letter in the alphabet is guessable until it has already been guessed
+    everyletter = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+    guessable = []
+    alreadyguessed = []
+    progress = ["_"] * len(tobeguessed)
+    life = 6
+
+    cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed)
 
     
 def cpuvsyou(choice, life):
