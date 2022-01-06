@@ -90,7 +90,7 @@ def cpuguess(wordarr, guessin, alrguessed, guessable):
         
         #??????? -> TypeError: tuple indices must be integers or slices, not list
         if i in alrguessed:
-            guessable[i] = 0
+            guessable[i] = "ß"
 
         else:
             checkwithlist.append(i)
