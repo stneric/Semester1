@@ -88,11 +88,11 @@ def cpuguess(wordarr, guessin, alrguessed, guessable):
     for i in guessable:
         
         #??????? -> TypeError: tuple indices must be integers or slices, not list
-        if guessable[i] in alrguessed:
+        if i in alrguessed:
             guessable[i] = 0
 
         else:
-            checkwithlist.append(guessable[i])
+            checkwithlist.append(i)
 
 
     if guessin != wordarr and alrguessed <= 26:
@@ -138,7 +138,8 @@ def cpuvsyou(choice, life):
     
 
     if choice == str(1):
-        words = ("pizza", "honig", "tastatur")
+       # words = ("pizza", "honig", "tastatur")
+       words = random.choice(open('GermanWords.txt').readlines())
 
     elif choice == str(2):
         words = ("extravagant", "superkalefragelisischexpialidetisch")
