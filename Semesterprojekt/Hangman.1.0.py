@@ -1,6 +1,7 @@
 import random #random picks something from a list at random
 import time
 import os 
+open('Semesterprojekt/GermanWords.txt', 'r')
 
 def intro():
     os.system('cls||clear')
