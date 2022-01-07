@@ -1,6 +1,8 @@
 import random #random picks something from a list at random
 import time
 import os 
+import re #read from file 
+
 open('Semesterprojekt/GermanWords.txt', 'r')
 
 def intro():
@@ -26,7 +28,7 @@ def intro():
 def gamerules():
     print("\n")
 
-    choice = (input("(1) Easy mode \t (2) Hard mode\n"))
+    choice = (input("(1) german mode \t (2) english mode\n"))
 
     if choice == str(1):
         print("The Rules:\n")
@@ -61,24 +63,28 @@ def gamerules():
     #cpuvsyou(choice, life)
 
 def cpuwins(life):
+    os.system('cls||clear')
     print("I've won!!")
     backtomenu()
 
 def cpuloses(life):
+    os.system('cls||clear')
     print("I've lost :(")
     backtomenu()
 
 def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
 
-    print(f"Life: {life}")
+    os.system('cls||clear')
+    print(f"Lives remaining: {life}\n")
 
+    #check, how many lives are left. If lives reach below 1, the CPU lost
     if life == 0:
         cpuloses(life)
     
     else:
         pass
 
-    #add letter to alreadyguessed
+    #check, 
     for i in range(0,len(everyletter)):
         check = everyletter[i]
         if check in alreadyguessed:
@@ -87,10 +93,11 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
         else:
             guessable.append(everyletter[i])
 
-    print(guessable) #check, if it worked
-            
+
+    # print(guessable) #check, if it worked (it did :D)       
     letter = random.choice(guessable)
 
+    # question the user as to if the guessed letter is part of the word, they chose
     print(f"is {letter} in the word?\n")
     choice = input("y/n\n")
 
@@ -137,11 +144,50 @@ def cpuvsyou(choice, life):
     
 
     if choice == str(1):
-       # words = ("pizza", "honig", "tastatur")
-       words = random.choice(open('GermanWords.txt').readlines())
+        #german wordlist https://theworld.com/~reinhold/diceware_german.txt
+
+        #might not work when just opening the file. PATH HAS TO BE REPLACED!
+        file = open('Semesterprojekt\GermanWords.txt', 'r')
+        # .lower() returns a version with all upper case characters replaced with lower case characters.
+        text = file.read().lower()
+
+        #close the file
+        file.close()
+
+        # replaces anything that is not a lowercase letter, a space, or an apostrophe with a space:
+        text = re.sub('[^a-z\ \']+', " ", text)
+        words = list(text.split())
+
+        #only be able to choose words above 5 characters
+        morethanfive = []
+        for i in words:
+            if len(i) >= 5:
+                morethanfive.append(i)
+
+        # print(morethanfive) - check if it worked
+
 
     elif choice == str(2):
-        words = ("extravagant", "superkalefragelisischexpialidetisch")
+        # english wordlist https://gist.github.com/deekayen/4148741
+
+        #might not work when just opening the file. PATH HAS TO BE REPLACED!
+        file = open('Semesterprojekt\EnglishWords.txt1', 'r')
+        # .lower() returns a version with all upper case characters replaced with lower case characters.
+        text = file.read().lower()
+
+        #close the file
+        file.close()
+
+        # replaces anything that is not a lowercase letter, a space, or an apostrophe with a space:
+        text = re.sub('[^a-z\ \']+', " ", text)
+        words = list(text.split())
+
+        #only be able to choose words above 5 characters
+        morethanfive = []
+        for i in words:
+            if len(i) >= 5:
+                morethanfive.append(i)
+        
 
 
     wort = random.choice(words)
@@ -173,7 +219,7 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr):
             print("\n")
 
         else:
-            gameover()
+            gameover(tobeguessed)
 
         #tobeguessed = []
         if guess == tobeguessed:
@@ -291,10 +337,11 @@ def eingabewahl():
             print("Please pick one of the two options.\n")
             eingabewahl()
 
-def gameover():
+def gameover(tobeguessed):
 
     os.system('cls||clear')
-    print("You've lost!")
+    print("You've lost!\n")
+    print(f"The word you were looking for was {tobeguessed}")
     backtomenu()
 
 intro()
