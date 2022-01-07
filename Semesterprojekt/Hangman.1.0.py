@@ -4,17 +4,18 @@ import time
 import os #
 import re #read from file 
 
-open('Semesterprojekt/GermanWords.txt', 'r')
+
 
 def intro():
     os.system('cls||clear')
-    print("""\\  
+    print("""\
+
 
     Welcome to 
-    _                                             
+     _                                             
     | |                                            
     | |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  
-    | '_ \ / _` | '_ \ / _` | '_ ` _ \ / _` | '_ \ 
+    | '_ \ / _` | '_ \ / _` | '_ ` _ \ / _` | '_  \ 
     | | | | (_| | | | | (_| | | | | | | (_| | | | |
     |_| |_|\__,_|_| |_|\__, |_| |_| |_|\__,_|_| |_|
                         __/ |                      
@@ -206,10 +207,11 @@ def cpuvsyou(choice, life):
     #print(tobeguessedarr)       #weg machen 
 
     emptyarr = [""]*len(tobeguessed)
+    alrguessed = []
 
-    guessing(tobeguessed, life, tobeguessedarr, length, emptyarr)     #6 Leben
+    guessing(tobeguessed, life, tobeguessedarr, length, emptyarr, alrguessed)     #6 Leben
 
-def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr):
+def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr, alrguessed):
     
         if life > 0:
             
@@ -255,20 +257,22 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr):
 
             else:
                 print(emptyarr)
-                guessing(tobeguessed,life,tobeguessedarr, length, emptyarr)
+                guessing(tobeguessed,life,tobeguessedarr, length, emptyarr, alrguessed)
 
-        elif guess in emptyarr:
+        elif guess in alrguessed:
             print("you've already guessed that one!")
-            guessing(tobeguessed, life, tobeguessedarr, length, emptyarr)
+            print(emptyarr)
+            guessing(tobeguessed, life, tobeguessedarr, length, emptyarr, alrguessed)
 
 
         else:
                
-            print(guess, "is not in the word")
+            print(guess, "is not in the word\n")
+            print(emptyarr)
             life = life-1
             print("Your current Health:\n", life)
-            emptyarr.append(guess)
-            guessing(tobeguessed, life, tobeguessedarr, length, emptyarr)
+            alrguessed.append(guess)
+            guessing(tobeguessed, life, tobeguessedarr, length, emptyarr, alrguessed)
 
 def celebration(life):
     

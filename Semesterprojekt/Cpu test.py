@@ -28,7 +28,7 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life):
         else:
             guessable.append(everyletter[i])
 
-    print(guessable) #check, if it worked
+    #print(guessable) #check, if it worked
             
     letter = random.choice(guessable)
 
