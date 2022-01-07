@@ -1,6 +1,7 @@
+
 import random #random picks something from a list at random
 import time
-import os 
+import os #
 import re #read from file 
 
 open('Semesterprojekt/GermanWords.txt', 'r')
@@ -26,15 +27,16 @@ def intro():
     eingabewahl()
 
 def gamerules():
+
     print("\n")
 
     choice = (input("(1) german mode \t (2) english mode\n"))
 
     if choice == str(1):
         print("The Rules:\n")
-        print("You've got 6 lives. Every time you guess wrong, one life is \n dedacted.\n If your lives reach zero, you lose\n Are you ready?\n")
+        print("You've got 7 lives. Every time you guess wrong, one life is \n dedacted.\n If your lives reach zero, you lose\n Are you ready?\n")
         wahl = (input("(1) Yes (2) No\n"))
-        life = 6
+        life = 7
 
 
         if wahl == str(1):
@@ -45,9 +47,9 @@ def gamerules():
 
     elif choice == str(2):
         print("The Rules:\n")
-        print("You've got 4 lives. Every time you guess wrong, one life is \n dedacted.\n If your lives reach zero, you lose\n Are you ready?\n")
+        print("You've got 7 lives. Every time you guess wrong, one life is \n dedacted.\n If your lives reach zero, you lose\n Are you ready?\n")
         wahl = (input("(1) Yes (2) No\n"))
-        life = 4
+        life = 7
 
         if wahl == str(1):
             cpuvsyou(choice, life)
@@ -171,7 +173,7 @@ def cpuvsyou(choice, life):
         # english wordlist https://gist.github.com/deekayen/4148741
 
         #might not work when just opening the file. PATH HAS TO BE REPLACED!
-        file = open('Semesterprojekt\EnglishWords.txt1', 'r')
+        file = open('Semesterprojekt\EnglishWords.txt', 'r')
         # .lower() returns a version with all upper case characters replaced with lower case characters.
         text = file.read().lower()
 
@@ -190,7 +192,7 @@ def cpuvsyou(choice, life):
         
 
 
-    wort = random.choice(words)
+    wort = random.choice(morethanfive)
     tobeguessed = wort
 
     tobeguessedarr = list(tobeguessed) #in ein array umwandeln um es lesbar zu machen mit buchstaben
@@ -208,9 +210,6 @@ def cpuvsyou(choice, life):
     guessing(tobeguessed, life, tobeguessedarr, length, emptyarr)     #6 Leben
 
 def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr):
-
-       
-
     
         if life > 0:
             
@@ -236,20 +235,12 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr):
                 
                 if guess == tobeguessedarr[i]:
                     
-                    # an der Stelle i soll emptyarr = buchstabe sein. 
-                    # emptyarr[i] = guess
-                    # print(emptyarr)
-                    # ausserdem muss geprueft werden ob der buchstabe
-                    # schon erraten wurde
-                    # if guess in emptyarr: print("you've already got this one")
-                    
                     print(guess, "is letter ", i+1)
 
                     buchstabe = tobeguessedarr[i]
 
                     if buchstabe in emptyarr[i]:
                         print("You've already guessed that one!")
-
 
                     else:
                         emptyarr[i] += buchstabe
@@ -266,16 +257,17 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr):
                 print(emptyarr)
                 guessing(tobeguessed,life,tobeguessedarr, length, emptyarr)
 
+        elif guess in emptyarr:
+            print("you've already guessed that one!")
+            guessing(tobeguessed, life, tobeguessedarr, length, emptyarr)
 
-
-    #    elif guess == tobeguessedarr:
-    #        print(guess, "!!!")            wenn das ganze Wort erraten wird
-    #        celebration(life)
 
         else:
+               
             print(guess, "is not in the word")
             life = life-1
             print("Your current Health:\n", life)
+            emptyarr.append(guess)
             guessing(tobeguessed, life, tobeguessedarr, length, emptyarr)
 
 def celebration(life):
