@@ -1,12 +1,60 @@
 import random
 
-def cpuwins(life):
-    print("I've won!!")
-    #backtomenu
+def cpuwins(life, cpuguess, everyletter, guessable, alreadyguessed, progress):
+    print(f"I've won!! with {life} lives remaining!")
+    cpuguess(everyletter,guessable,alreadyguessed,progress,life)
 
-def cpuloses(life):
+def cpuloses(life, cpuguess, everyletter, guessable, alreadyguessed, progress):
     print("I've lost :(")
-    #backtomenu
+    cpuguess(everyletter,guessable,alreadyguessed,progress,life)
+
+def errcheck(letter, life, alreadyguessed, tobeguessed, progress, cpuguess, everyletter, guessable):
+
+    print(f"is {letter} in the word?\n")
+    choice = input("y/n\n")
+
+    if choice == str("y"):
+        alreadyguessed.append(letter)
+        #check where the letter is located
+        for i in range(0,len(tobeguessed)):
+            if tobeguessed[i] == letter:
+                progress[i] = letter
+
+    elif choice == str("n"):
+        alreadyguessed.append(letter)
+        life = life-1
+        cpuguess(everyletter,guessable, alreadyguessed, progress, life)
+
+    else:
+        print("Invalid input!")
+        return errcheck(letter, life, alreadyguessed, tobeguessed, progress, cpuguess, everyletter, guessable)
+
+
+def logik(letter, life, alreadyguessed, tobeguessed, progress, cpuguess, everyletter, guessable):
+
+    # 1 erster Buchstabe ist e
+    # 2 wenn e nicht drin dann erratte n weil zweit haeufigster buchstabe
+    # 3 wenn e und n nicht drin dann erratte i weil zweit haeufigster buchstabe
+    # 4 wenn e und n und i drin ist, dann erratte r weil dritt haeufigster Buchstabe
+    # 6 wenn e und n und i und t nicht drin sind, dann errate s weil fuenf haeufisgter Buchstabe
+    
+
+    # def ersteBuchtsbaenraten():
+    #       while e, n i t r s der buchstabe e nicht drin dann nachster
+    #       if eins von denen drin dann check mit der Bibliothek
+    #       sgaen wenn input y dann check den buchtsabe und die STelle und dann 
+    #       Moegliche Woerter  = [] wenn buchstabe an stelle dann append das in moegliche woerter
+    #       
+
+
+    letter = "e"
+    errcheck(letter, life, alreadyguessed, tobeguessed, progress, cpuguess, everyletter, guessable)
+
+    if letter in tobeguessed:
+        
+    check = input("is e part of your word? (y/n)")
+
+    if check == str("y"):
 
 
 def cpuguess(everyletter,guessable,alreadyguessed,progress,life):
@@ -29,23 +77,14 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life):
             guessable.append(everyletter[i])
 
     #print(guessable) #check, if it worked
-            
-    letter = random.choice(guessable)
 
-    print(f"is {letter} in the word?\n")
-    choice = input("y/n\n")
+    
+    
+    logik(letter)
 
-    if choice == str("y"):
-        alreadyguessed.append(letter)
-        #check where the letter stands
-        for i in range(0,len(tobeguessed)):
-            if tobeguessed[i] == letter:
-                progress[i] = letter
+   
 
-    elif choice == str("n"):
-        alreadyguessed.append(letter)
-        life = life-1
-
+    
 
     print(f"so far: {progress}")
 
@@ -66,6 +105,6 @@ everyletter = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","
 guessable = []
 alreadyguessed = []
 progress = ["_"] * len(tobeguessed)
-life = 6
+life = 10
 
 cpuguess(everyletter,guessable,alreadyguessed,progress,life)

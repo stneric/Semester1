@@ -1,19 +1,21 @@
-# 21.11.2021
-
 
 import random #random picks something from a list at random
 import time
-import os 
+import os #
+import re #read from file 
+
+
 
 def intro():
     os.system('cls||clear')
-    print("""\\  
+    print("""\
+
 
     Welcome to 
-    _                                             
+     _                                             
     | |                                            
     | |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  
-    | '_ \ / _` | '_ \ / _` | '_ ` _ \ / _` | '_ \ 
+    | '_ \ / _` | '_ \ / _` | '_ ` _ \ / _` | '_  \ 
     | | | | (_| | | | | (_| | | | | | | (_| | | | |
     |_| |_|\__,_|_| |_|\__, |_| |_| |_|\__,_|_| |_|
                         __/ |                      
@@ -26,15 +28,16 @@ def intro():
     eingabewahl()
 
 def gamerules():
+
     print("\n")
 
-    choice = (input("(1) Easy mode \t (2) Hard mode\n"))
+    choice = (input("(1) german mode \t (2) english mode\n"))
 
     if choice == str(1):
         print("The Rules:\n")
-        print("You've got 6 lives. Every time you guess wrong, one life is \n dedacted.\n If your lives reach zero, you lose\n Are you ready?\n")
+        print("You've got 7 lives. Every time you guess wrong, one life is \n dedacted.\n If your lives reach zero, you lose\n Are you ready?\n")
         wahl = (input("(1) Yes (2) No\n"))
-        life = 6
+        life = 7
 
 
         if wahl == str(1):
@@ -45,9 +48,9 @@ def gamerules():
 
     elif choice == str(2):
         print("The Rules:\n")
-        print("You've got 4 lives. Every time you guess wrong, one life is \n dedacted.\n If your lives reach zero, you lose\n Are you ready?\n")
+        print("You've got 7 lives. Every time you guess wrong, one life is \n dedacted.\n If your lives reach zero, you lose\n Are you ready?\n")
         wahl = (input("(1) Yes (2) No\n"))
-        life = 4
+        life = 7
 
         if wahl == str(1):
             cpuvsyou(choice, life)
@@ -62,45 +65,80 @@ def gamerules():
     
     #cpuvsyou(choice, life)
 
+def cpuwins(life):
+    os.system('cls||clear')
+    print("I've won!!")
+    backtomenu()
+
+def cpuloses(life):
+    os.system('cls||clear')
+    print("I've lost :(")
+    backtomenu()
+
+def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
+
+    os.system('cls||clear')
+    print(f"Lives remaining: {life}\n")
+
+    #check, how many lives are left. If lives reach below 1, the CPU lost
+    if life == 0:
+        cpuloses(life)
+    
+    else:
+        pass
+
+    #check, 
+    for i in range(0,len(everyletter)):
+        check = everyletter[i]
+        if check in alreadyguessed:
+            i = i+1
+
+        else:
+            guessable.append(everyletter[i])
 
 
+    # print(guessable) #check, if it worked (it did :D)       
+    letter = random.choice(guessable)
+
+    # question the user as to if the guessed letter is part of the word, they chose
+    print(f"is {letter} in the word?\n")
+    choice = input("y/n\n")
+
+    if choice == str("y"):
+        alreadyguessed.append(letter)
+        #check where the letter stands
+        for i in range(0,len(tobeguessed)):
+            if tobeguessed[i] == letter:
+                progress[i] = letter
+
+    elif choice == str("n"):
+        alreadyguessed.append(letter)
+        life = life-1
+
+
+    print(f"so far: {progress}")
+
+    if progress == tobeguessed:
+        cpuwins(life)
+
+    else:
+        guessable = []  #set to empty again, for repopulation
+        cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed)
 
 def youvscpu():
 
-    alphabet = ["a"],["b"],["c"],["d"],["e"],["f"],["g"],["h"],["i"],["j"],["k"],["l"],["m"],["n"],["o"],["p"],["q"],["r"],["s"],["t"],["u"],["v"],["w"],["x"],["y"],["z"]
-        #wahscheinlichkeiten erhoehen
+    guess = input("What word should be guessed?\n")
+    tobeguessed = list(guess)
 
-    word = input("Word to be guessed:")
-    print(word)
+    #every letter in the alphabet is guessable until it has already been guessed
+    everyletter = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+    guessable = []
+    alreadyguessed = []
+    progress = ["_"] * len(tobeguessed)
+    life = 6
 
-    wordarr = list(word)
-
-    guessin = []*len(word)
-
-    wrong = []
-
-
-    while word != guessin:
-    
-        buchstabe = "a"
-
-        if buchstabe in wrong:
-            buchstabe = random.choice(alphabet)
-
-        else:
-            buchstabe = random.choice(alphabet)
-
-        print("Is",buchstabe, "present in your word?")
-
-        choose = int(input("(1) Yes or (0) No?"))
-
-        if choose == 1:
-            guessin.append(buchstabe)
-            print(guessin)
-
-        elif choose == 0:
-            wrong.append(buchstabe)
-    
+    cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed)
+ 
 def cpuvsyou(choice, life):
     os.system('cls||clear')
     length = ""
@@ -109,13 +147,53 @@ def cpuvsyou(choice, life):
     
 
     if choice == str(1):
-        words = ("pizza", "honig", "tastatur")
+        #german wordlist https://theworld.com/~reinhold/diceware_german.txt
+
+        #might not work when just opening the file. PATH HAS TO BE REPLACED!
+        file = open('Semesterprojekt\GermanWords.txt', 'r')
+        # .lower() returns a version with all upper case characters replaced with lower case characters.
+        text = file.read().lower()
+
+        #close the file
+        file.close()
+
+        # replaces anything that is not a lowercase letter, a space, or an apostrophe with a space:
+        text = re.sub('[^a-z\ \']+', " ", text)
+        words = list(text.split())
+
+        #only be able to choose words above 5 characters
+        morethanfive = []
+        for i in words:
+            if len(i) >= 5:
+                morethanfive.append(i)
+
+        # print(morethanfive) - check if it worked
+
 
     elif choice == str(2):
-        words = ("extravagant", "superkalefragelisischexpialidetisch")
+        # english wordlist https://gist.github.com/deekayen/4148741
+
+        #might not work when just opening the file. PATH HAS TO BE REPLACED!
+        file = open('Semesterprojekt\EnglishWords.txt', 'r')
+        # .lower() returns a version with all upper case characters replaced with lower case characters.
+        text = file.read().lower()
+
+        #close the file
+        file.close()
+
+        # replaces anything that is not a lowercase letter, a space, or an apostrophe with a space:
+        text = re.sub('[^a-z\ \']+', " ", text)
+        words = list(text.split())
+
+        #only be able to choose words above 5 characters
+        morethanfive = []
+        for i in words:
+            if len(i) >= 5:
+                morethanfive.append(i)
+        
 
 
-    wort = random.choice(words)
+    wort = random.choice(morethanfive)
     tobeguessed = wort
 
     tobeguessedarr = list(tobeguessed) #in ein array umwandeln um es lesbar zu machen mit buchstaben
@@ -129,13 +207,11 @@ def cpuvsyou(choice, life):
     #print(tobeguessedarr)       #weg machen 
 
     emptyarr = [""]*len(tobeguessed)
+    alrguessed = []
 
-    guessing(tobeguessed, life, tobeguessedarr, length, emptyarr)     #6 Leben
+    guessing(tobeguessed, life, tobeguessedarr, length, emptyarr, alrguessed)     #6 Leben
 
-def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr):
-
-       
-
+def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr, alrguessed):
     
         if life > 0:
             
@@ -144,7 +220,7 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr):
             print("\n")
 
         else:
-            gameover()
+            gameover(tobeguessed)
 
         #tobeguessed = []
         if guess == tobeguessed:
@@ -161,20 +237,12 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr):
                 
                 if guess == tobeguessedarr[i]:
                     
-                    # an der Stelle i soll emptyarr = buchstabe sein. 
-                    # emptyarr[i] = guess
-                    # print(emptyarr)
-                    # ausserdem muss geprueft werden ob der buchstabe
-                    # schon erraten wurde
-                    # if guess in emptyarr: print("you've already got this one")
-                    
                     print(guess, "is letter ", i+1)
 
                     buchstabe = tobeguessedarr[i]
 
                     if buchstabe in emptyarr[i]:
                         print("You've already guessed that one!")
-
 
                     else:
                         emptyarr[i] += buchstabe
@@ -189,19 +257,22 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr):
 
             else:
                 print(emptyarr)
-                guessing(tobeguessed,life,tobeguessedarr, length, emptyarr)
+                guessing(tobeguessed,life,tobeguessedarr, length, emptyarr, alrguessed)
 
+        elif guess in alrguessed:
+            print("you've already guessed that one!")
+            print(emptyarr)
+            guessing(tobeguessed, life, tobeguessedarr, length, emptyarr, alrguessed)
 
-
-    #    elif guess == tobeguessedarr:
-    #        print(guess, "!!!")            wenn das ganze Wort erraten wird
-    #        celebration(life)
 
         else:
-            print(guess, "is not in the word")
+               
+            print(guess, "is not in the word\n")
+            print(emptyarr)
             life = life-1
             print("Your current Health:\n", life)
-            guessing(tobeguessed, life, tobeguessedarr, length, emptyarr)
+            alrguessed.append(guess)
+            guessing(tobeguessed, life, tobeguessedarr, length, emptyarr, alrguessed)
 
 def celebration(life):
     
@@ -262,10 +333,11 @@ def eingabewahl():
             print("Please pick one of the two options.\n")
             eingabewahl()
 
-def gameover():
+def gameover(tobeguessed):
 
     os.system('cls||clear')
-    print("You've lost!")
+    print("You've lost!\n")
+    print(f"The word you were looking for was {tobeguessed}")
     backtomenu()
 
 intro()

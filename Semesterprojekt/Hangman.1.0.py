@@ -149,7 +149,6 @@ def cpuvsyou(choice, life):
     if choice == str(1):
         #german wordlist https://theworld.com/~reinhold/diceware_german.txt
 
-        #might not work when just opening the file. PATH HAS TO BE REPLACED!
         file = open('Semesterprojekt\GermanWords.txt', 'r')
         # .lower() returns a version with all upper case characters replaced with lower case characters.
         text = file.read().lower()
