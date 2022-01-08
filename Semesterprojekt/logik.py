@@ -94,7 +94,7 @@ def mechanik(wort, sofar, wortarr, alrguessed):
 
     beginning(alrguessed, wortarr, sofar, estored, nstored, istored, tstored, rstored, sstored, everythingstored, anfangsbuchstaben)
 
-    file = open('Semesterprojekt\GermanWords.txt', 'r')
+    file = open('Semesterprojekt/GermanWords.txt', 'r')
     # .lower() returns a version with all upper case characters replaced with lower case characters.
     text = file.read().lower()
 
@@ -177,29 +177,33 @@ def mechanik(wort, sofar, wortarr, alrguessed):
 
     #very inefficient but just want it to work before I optimize
 
+
+
+    searching = []
+
+    for i in range(0,len(everythingstored)):
+        if everythingstored[i] == 1000:
+            pass
+        else:
+            searching.append(everythingstored[i])
+
+    #filter list for length 
+
+    filtered = []
+
     for word in possible:
-        for i in range(0):
-            wo = everythingstored[i]
-            if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
-                i = i+1
-                wo = everythingstored[i]
-                if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
-                    i = i+1
-                    wo = everythingstored[i]
-                    if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
-                        i = i+1
-                        wo = everythingstored[i]
-                        if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
-                            i = i+1
-                            wo = everythingstored[i]
-                            if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
-                               i = i+1
-                               wo = everythingstored[i]
-                               if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
-                                   i = i+1
-                                   wo = everythingstored[i]
-                                   if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
-                                       actualwords.append(word)
+        if len(word) == len(sofar):
+            filtered.append(word)
+
+    print("filtered:", filtered) 
+
+
+    print("everythingsorted:", everythingstored)
+    print("searching:", searching)
+
+    '''for i in searching:
+        actualwords = re.findall(anfangsbuchstaben[i], possible)
+'''
 
     print(actualwords)
 
