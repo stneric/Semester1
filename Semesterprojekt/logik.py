@@ -15,7 +15,7 @@ import re
     #       Moegliche Woerter  = [] wenn buchstabe an stelle dann append das in moegliche woerter
 
 
-def beginning(alrguessed, wortarr, sofar):
+def beginning(alrguessed, wortarr, sofar, estored, nstored, istored, tstored, rstored, sstored, everythingstored, anfangsbuchstaben):
 
     anfangsbuchstaben = ["e", "n", "i", "t", "r", "s"]
 
@@ -36,11 +36,63 @@ def beginning(alrguessed, wortarr, sofar):
             print(sofar)
             alrguessed.append(anfangsbuchstaben[i])
 
+    # save, where a letter is
+    
+    for i in range(0,len(sofar)):
+        if sofar[i] == "e":
+            estored = i
+
+        elif sofar[i] == "n":
+            nstored = i
+
+        elif sofar[i] == "i":
+            istored = i
+
+        elif sofar[i] == "t":
+            tstored = i
+
+        elif sofar[i] == "r":
+            rstored = i
+
+        elif sofar[i] == "s":
+            sstored = i
+        
+        else:
+            pass
+
+    #I know this is ugly, leave me alone
+
+    #print(estored, nstored, istored, tstored, rstored, sstored)
+    
+
+    everythingstored[0] = estored
+    everythingstored[1] = nstored
+    everythingstored[2] = istored
+    everythingstored[3] = tstored
+    everythingstored[4] = rstored
+    everythingstored[5] = sstored
+
+
+    #print(everythingstored)
+
 
 
 def mechanik(wort, sofar, wortarr, alrguessed):
 
-    beginning(alrguessed, wortarr, sofar)
+    anfangsbuchstaben = []
+
+    everythingstored = [1,2,3,4,5,6]
+
+    #store value to compare to. 1000 index is obviously too high -> 1000 = letter not in word, therefore has no index
+
+    estored = 1000
+    nstored = 1000
+    istored = 1000
+    tstored = 1000
+    rstored = 1000
+    sstored = 1000
+
+    beginning(alrguessed, wortarr, sofar, estored, nstored, istored, tstored, rstored, sstored, everythingstored, anfangsbuchstaben)
 
     file = open('Semesterprojekt\GermanWords.txt', 'r')
     # .lower() returns a version with all upper case characters replaced with lower case characters.
@@ -57,6 +109,105 @@ def mechanik(wort, sofar, wortarr, alrguessed):
     for i in everything:
         if len(i) >= 3:
             words.append(i)
+
+
+    possible = []
+ 
+
+    #append words that could be it
+
+    eisthere = 0
+    nisthere = 0
+    iisthere = 0
+    tisthere = 0
+    risthere = 0
+    sisthere = 0
+
+    if estored != 1000:
+        for word in words:
+            if word[estored] == "e":
+                possible.append(word)
+                eisthere = 1
+            else:
+                eisthere = 0
+
+    if nstored != 1000:
+        for word in words:
+            if word[nstored] == "n":
+                possible.append(word)
+                nisthere = 1
+            else:
+                nisthere = 0
+
+    if istored != 1000:
+        for word in words:
+            if word[istored] == "i":
+                iisthere = 1
+                possible.append(word)
+            else:
+                iisthere = 0
+    
+    if tstored != 1000:
+        for word in words:
+            if word[tstored] == "t":
+                tisthere = 1
+                possible.append(word)
+            else:
+                tisthere = 0
+
+    if rstored != 1000:
+        for word in words:
+            if word[rstored] == "r":
+                risthere = 1
+                possible.append(word)
+            else:
+                risthere = 0
+
+    if sstored != 1000:
+        for word in words:
+            if word[sstored] == "s":
+                sisthere = 1
+                possible.append(word)
+            else:
+                sisthere = 0
+
+    actualwords = []
+    tobesearched = []
+
+
+    #very inefficient but just want it to work before I optimize
+
+    for word in possible:
+        for i in range(0):
+            wo = everythingstored[i]
+            if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
+                i = i+1
+                wo = everythingstored[i]
+                if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
+                    i = i+1
+                    wo = everythingstored[i]
+                    if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
+                        i = i+1
+                        wo = everythingstored[i]
+                        if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
+                            i = i+1
+                            wo = everythingstored[i]
+                            if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
+                               i = i+1
+                               wo = everythingstored[i]
+                               if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
+                                   i = i+1
+                                   wo = everythingstored[i]
+                                   if wo != 1000 and word[wo] == anfangsbuchstaben[i]:
+                                       actualwords.append(word)
+
+    print(actualwords)
+
+
+
+
+
+    
 
 # everything below this line doesn't work
 
