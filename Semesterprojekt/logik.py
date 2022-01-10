@@ -1,19 +1,5 @@
+
 import re
-
-
-# 1 erster Buchstabe ist e
-    # 2 wenn e nicht drin dann erratte n weil zweit haeufigster buchstabe
-    # 3 wenn e und n nicht drin dann erratte i weil zweit haeufigster buchstabe
-    # 4 wenn e und n und i drin ist, dann erratte r weil dritt haeufigster Buchstabe
-    # 6 wenn e und n und i und t nicht drin sind, dann errate s weil fuenf haeufisgter Buchstabe
-    
-
-    # def ersteBuchtsbaenraten():
-    #       while e, n i t r s der buchstabe e nicht drin dann nachster
-    #       if eins von denen drin dann check mit der Bibliothek
-    #       sgaen wenn input y dann check den buchtsabe und die STelle und dann 
-    #       Moegliche Woerter  = [] wenn buchstabe an stelle dann append das in moegliche woerter
-
 
 def beginning(alrguessed, wortarr, sofar, estored, nstored, istored, tstored, rstored, sstored, everythingstored, anfangsbuchstaben):
 
@@ -75,8 +61,6 @@ def beginning(alrguessed, wortarr, sofar, estored, nstored, istored, tstored, rs
 
     #print(everythingstored)
 
-
-
 def mechanik(wort, sofar, wortarr, alrguessed):
 
     anfangsbuchstaben = []
@@ -114,70 +98,7 @@ def mechanik(wort, sofar, wortarr, alrguessed):
     possible = []
  
 
-    #append words that could be it
-
-    eisthere = 0
-    nisthere = 0
-    iisthere = 0
-    tisthere = 0
-    risthere = 0
-    sisthere = 0
-
-    if estored != 1000:
-        for word in words:
-            if word[estored] == "e":
-                possible.append(word)
-                eisthere = 1
-            else:
-                eisthere = 0
-
-    if nstored != 1000:
-        for word in words:
-            if word[nstored] == "n":
-                possible.append(word)
-                nisthere = 1
-            else:
-                nisthere = 0
-
-    if istored != 1000:
-        for word in words:
-            if word[istored] == "i":
-                iisthere = 1
-                possible.append(word)
-            else:
-                iisthere = 0
-    
-    if tstored != 1000:
-        for word in words:
-            if word[tstored] == "t":
-                tisthere = 1
-                possible.append(word)
-            else:
-                tisthere = 0
-
-    if rstored != 1000:
-        for word in words:
-            if word[rstored] == "r":
-                risthere = 1
-                possible.append(word)
-            else:
-                risthere = 0
-
-    if sstored != 1000:
-        for word in words:
-            if word[sstored] == "s":
-                sisthere = 1
-                possible.append(word)
-            else:
-                sisthere = 0
-
-    actualwords = []
-    tobesearched = []
-
-
     #very inefficient but just want it to work before I optimize
-
-
 
     searching = []
 
@@ -191,60 +112,53 @@ def mechanik(wort, sofar, wortarr, alrguessed):
 
     filtered = []
 
-    for word in possible:
+    for word in words:
         if len(word) == len(sofar):
             filtered.append(word)
 
-    print("filtered:", filtered) 
+    superfilter = []
 
+    for i in range(0,len(searching)):
+        if everythingstored == 1000:
+            pass
+        else:
+            if i == 0:
+                for word in filtered:
+                    for i in range(0, len(word)):
+                        if word[i] == "e":
+                            superfilter.append(word)
+        
+            if i == 1:
+                for word in filtered:
+                    for i in range(0, len(word)):
+                        if word[i] == "n":
+                            superfilter.append(word)
 
-    print("everythingsorted:", everythingstored)
-    print("searching:", searching)
+            if i == 2:
+                for word in filtered:
+                    for i in range(0, len(word)):
+                        if word[i] == "i":
+                            superfilter.append(word)
 
-    '''for i in searching:
-        actualwords = re.findall(anfangsbuchstaben[i], possible)
-'''
+            if i == 3:
+                for word in filtered:
+                    for i in range(0, len(word)):
+                        if word[i] == "t":
+                            superfilter.append(word)
 
-    print(actualwords)
+            if i == 4:
+                for word in filtered:
+                    for i in range(0, len(word)):
+                        if word[i] == "r":
+                            superfilter.append(word)
 
+            if i == 5:
+                for word in filtered:
+                    for i in range(0, len(word)):
+                        if word[i] == "s":
+                            superfilter.append(word)
 
-
-
-
-    
-
-# everything below this line doesn't work
-
-    #make string
-
-    # possible = [""]*len(sofar)
-    # possiblestr = ""
-
-    # for i in range (0,len(sofar)):
-    #     if sofar[i] == "":
-    #         possible[i] = "="   # muss ersetzt werden mit jedem buchstaben?? string in einzelne buchstaben
-    #                             # einteilen und worte nach den buchstaben suchen die an der gleiche stelle sind
-    #                             # danach filtern und raussuchen, wo die Buchstaben alle an den richtigen stellen
-    #                             # vorkommen. 
-    #     else:
-    #         possible[i] = sofar[i]
-
-    # for i in range(0,len(sofar)):
-    #     possiblestr += possible[i]
-
-    # print(possiblestr)
-
-    # #only be able to choose words that have the already guessed letters in them, in the same order
-    
-    # sorted = []
-
-    # for i in range(0,len(words)): 
-    #     s=words[i].lower()
-    #     if possiblestr in s: 
-    #         sorted.append(words[i])
-
-    # print(sorted)
-    
+    print("superfilter:",superfilter)
 
 
 def start():
