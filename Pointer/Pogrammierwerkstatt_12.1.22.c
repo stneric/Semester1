@@ -1,5 +1,6 @@
 #include <stdio.h> 
 #include <stdlib.h>
+#include <asstert.h>
 
 // Baum 
 
@@ -8,6 +9,16 @@ typedef struct bbaum{
     struct baum*lk;
     struct baum*rk;
 }bbaum;
+
+bbaum* erzeuge:knoten(int wert){
+    bbaum* k = malloc(sizeof(baum));
+    if(k == NULL) {
+        //Fehlerbehandlung
+    }
+    assert(k != NULL);
+
+    k-> wert
+}
 
 // um zu checken welchen Knoten man schon "gesehen" hat. Entweder mit einem Struct in dem man sich
 // das speichern kann, oder man setzt die "Farbe" auf rot (z.B.) wenn man noch nicht drin war etc.
