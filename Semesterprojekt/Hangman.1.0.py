@@ -100,6 +100,8 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
     # print(guessable) #check, if it worked (it did :D)       
     letter = random.choice(guessable)
 
+    print(f"so far: {progress}")
+
     # question the user as to if the guessed letter is part of the word, they chose
     print(f"is {letter} in the word?\n")
     choice = input("y/n\n")
@@ -116,8 +118,6 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
         life = life-1
 
 
-    print(f"so far: {progress}")
-
     if progress == tobeguessed:
         cpuwins(life)
 
@@ -127,8 +127,17 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
 
 def youvscpu():
 
-    guess = input("What word should be guessed?\n")
+    guess = str(input("What GERMAN word should be guessed?\n"))
     tobeguessed = list(guess)
+
+    if len(guess) >= 16 or len(guess) < 3:
+        print("\nPlease only put in a word. \n Only 3 to 15 letter words are allowed!\n (no umlauts please)\n")
+        input("press Enter to try again.")
+        os.system('cls||clear')
+        youvscpu()
+    
+    else:
+        pass
 
     #every letter in the alphabet is guessable until it has already been guessed
     everyletter = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
@@ -149,7 +158,7 @@ def cpuvsyou(choice, life):
     if choice == str(1):
         #german wordlist https://theworld.com/~reinhold/diceware_german.txt
 
-        file = open('Semesterprojekt\GermanWords.txt', 'r')
+        file = open('BigGermanWordlist.txt', 'r')
         # .lower() returns a version with all upper case characters replaced with lower case characters.
         text = file.read().lower()
 
