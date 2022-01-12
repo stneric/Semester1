@@ -9,6 +9,9 @@ typedef struct bbaum{
     struct baum*rk;
 }bbaum;
 
+// um zu checken welchen Knoten man schon "gesehen" hat. Entweder mit einem Struct in dem man sich
+// das speichern kann, oder man setzt die "Farbe" auf rot (z.B.) wenn man noch nicht drin war etc.
+
 void print_tiefensuche_baum_praefix(bbaum* wurzel){ //Praefix = Ausgabe vor Funktion 
 
     if(wurzel == NULL){                 // NULL == nicht existent, kein Knoten da.
