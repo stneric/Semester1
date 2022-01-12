@@ -1,8 +1,8 @@
 
-import random #random picks something from a list at random
-import time
-import os #
-import re #read from file 
+import random #zufallsprinzip bei der Wahl von Worten
+import time #um 
+import os #fuer "clear" im Terminal 
+import re #regex
 
 
 
@@ -29,13 +29,21 @@ def intro():
 
 def gamerules():
 
+    os.system('cls||clear')
+
     print("\n")
 
     choice = (input("(1) german mode \t (2) english mode\n"))
 
     if choice == str(1):
+        print("\n")
         print("The Rules:\n")
-        print("You've got 7 lives. Every time you guess wrong, one life is \n dedacted.\n If your lives reach zero, you lose\n Are you ready?\n")
+        print("You've got 7 lives. Every time you guess wrong,")
+        print("one life is dedacted.")
+        print("If your lives reach zero, you lose.")
+        print("\n")
+        print("Are you ready?")
+        
         wahl = (input("(1) Yes (2) No\n"))
         life = 7
 
@@ -47,10 +55,16 @@ def gamerules():
             gamerules()
 
     elif choice == str(2):
+        print("\n")
         print("The Rules:\n")
-        print("You've got 7 lives. Every time you guess wrong, one life is \n dedacted.\n If your lives reach zero, you lose\n Are you ready?\n")
+        print("You've got 9 lives. Every time you guess wrong,")
+        print("one life is dedacted.")
+        print("If your lives reach zero, you lose.")
+        print("\n")
+        print("Are you ready?")
+
         wahl = (input("(1) Yes (2) No\n"))
-        life = 7
+        life = 9
 
         if wahl == str(1):
             cpuvsyou(choice, life)
@@ -127,12 +141,20 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
 
 def youvscpu():
 
+    os.system('cls||clear')
+
     guess = str(input("What GERMAN word should be guessed?\n"))
     tobeguessed = list(guess)
 
     if len(guess) >= 16 or len(guess) < 3:
         print("\nPlease only put in a word. \n Only 3 to 15 letter words are allowed!\n (no umlauts please)\n")
-        input("press Enter to try again.")
+        w = input("press Enter to try again, or press (m) to return to menu.")
+
+        if w == str("m"):
+            backtomenu()
+        else:
+            pass
+
         os.system('cls||clear')
         youvscpu()
     
@@ -158,7 +180,7 @@ def cpuvsyou(choice, life):
     if choice == str(1):
         #german wordlist https://theworld.com/~reinhold/diceware_german.txt
 
-        file = open('BigGermanWordlist.txt', 'r')
+        file = open('Semesterprojekt/GermanWords.txt', 'r')
         # .lower() returns a version with all upper case characters replaced with lower case characters.
         text = file.read().lower()
 
@@ -169,10 +191,10 @@ def cpuvsyou(choice, life):
         text = re.sub('[^a-z\ \']+', " ", text)
         words = list(text.split())
 
-        #only be able to choose words above 5 characters
+        #only be able to choose words above 5 and under 10 characters
         morethanfive = []
         for i in words:
-            if len(i) >= 5:
+            if len(i) >= 5 and len(i) < 10:     
                 morethanfive.append(i)
 
         # print(morethanfive) - check if it worked
@@ -182,7 +204,7 @@ def cpuvsyou(choice, life):
         # english wordlist https://gist.github.com/deekayen/4148741
 
         #might not work when just opening the file. PATH HAS TO BE REPLACED!
-        file = open('Semesterprojekt\EnglishWords.txt', 'r')
+        file = open('Semesterprojekt/EnglishWords.txt', 'r')
         # .lower() returns a version with all upper case characters replaced with lower case characters.
         text = file.read().lower()
 
@@ -196,7 +218,7 @@ def cpuvsyou(choice, life):
         #only be able to choose words above 5 characters
         morethanfive = []
         for i in words:
-            if len(i) >= 5:
+            if len(i) >= 5 and len(i) < 10:
                 morethanfive.append(i)
         
 
@@ -220,11 +242,20 @@ def cpuvsyou(choice, life):
     guessing(tobeguessed, life, tobeguessedarr, length, emptyarr, alrguessed)     #6 Leben
 
 def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr, alrguessed):
-    
+
         if life > 0:
-            
             print("\n")
-            guess = input("Pick a letter:")
+            print(f"Guessed wrong: {alrguessed}")
+            print("Your current Health: ", life)
+            print("\n")
+            guess = str(input("Pick a letter: "))
+
+            
+            if len(guess) != 1:         # eine Zahl oder einen Umlaut zu raten ist nicht falsch und schadet nur
+                print("please only put one letter in!") # dem Spieler. 
+                time.sleep(2)
+                guessing(tobeguessed, life, tobeguessedarr,length,emptyarr,alrguessed)
+
             print("\n")
 
         else:
@@ -236,10 +267,10 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr, alrguessed):
 
         else:
             pass
-
-        
+   
 
         if guess in tobeguessed:
+
 
             for i in range(0,len(tobeguessedarr)):
                 
@@ -249,7 +280,7 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr, alrguessed):
 
                     buchstabe = tobeguessedarr[i]
 
-                    if buchstabe in emptyarr[i]:
+                    if buchstabe in emptyarr[i] or guess in alrguessed:
                         print("You've already guessed that one!")
 
                     else:
@@ -268,9 +299,8 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr, alrguessed):
                 guessing(tobeguessed,life,tobeguessedarr, length, emptyarr, alrguessed)
 
         elif guess in alrguessed:
-            print("you've already guessed that one!")
-            print(emptyarr)
-            guessing(tobeguessed, life, tobeguessedarr, length, emptyarr, alrguessed)
+            print("Already guessed that one!")
+            guessing(tobeguessed,life,tobeguessedarr, length, emptyarr, alrguessed)
 
 
         else:
@@ -278,8 +308,8 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr, alrguessed):
             print(guess, "is not in the word\n")
             print(emptyarr)
             life = life-1
-            print("Your current Health:\n", life)
             alrguessed.append(guess)
+            
             guessing(tobeguessed, life, tobeguessedarr, length, emptyarr, alrguessed)
 
 def celebration(life):
@@ -346,6 +376,7 @@ def gameover(tobeguessed):
     os.system('cls||clear')
     print("You've lost!\n")
     print(f"The word you were looking for was {tobeguessed}")
+    print("\n")
     backtomenu()
 
 intro()
