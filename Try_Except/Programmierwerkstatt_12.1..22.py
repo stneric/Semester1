@@ -26,3 +26,5 @@ while not eingabe_erflogreich:
     except AssertionError:
         print("a muss kleiner 10 sein")
 
+# item.strip() entfernt alle leerzeichen, und Absaetze
+# enumerate(text.split) (element, index des elements)
