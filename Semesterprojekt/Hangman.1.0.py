@@ -1,12 +1,12 @@
 
 import random #zufallsprinzip bei der Wahl von Worten
-import time #um 
+import time #um Verzoegerungen einzubauen
 import os #fuer "clear" im Terminal 
 import re #regex
 
 
 
-def intro():
+def intro(): #das Hauptmenue
     os.system('cls||clear')
     print("""\
 
@@ -90,6 +90,9 @@ def cpuloses(life):
     backtomenu()
 
 def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
+    # Einen Versuch der erweiterten Logik ist im Ordner als Datei logik.py. Leider
+    # hat diese nicht komplett funktioniert, weswegen der Computer aktuell 
+    # quasi immer verliert.
 
     os.system('cls||clear')
     print(f"Lives remaining: {life}\n")
@@ -111,18 +114,18 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
             guessable.append(everyletter[i])
 
 
-    # print(guessable) #check, if it worked (it did :D)       
+    # Buchstabe der geraten wird, wird durch Zufall ausgewaehlt       
     letter = random.choice(guessable)
 
     print(f"so far: {progress}")
 
-    # question the user as to if the guessed letter is part of the word, they chose
+    # Fragen, ob der Buchstaben im zu erratendem Wort ist
     print(f"is {letter} in the word?\n")
     choice = input("y/n\n")
 
     if choice == str("y"):
         alreadyguessed.append(letter)
-        #check where the letter stands
+        #checken, wo der Buchstabe sich im zu erratendem Wort findet
         for i in range(0,len(tobeguessed)):
             if tobeguessed[i] == letter:
                 progress[i] = letter
@@ -136,7 +139,7 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed):
         cpuwins(life)
 
     else:
-        guessable = []  #set to empty again, for repopulation
+        guessable = []  #Wieder leeren fuer erneute populierung
         cpuguess(everyletter,guessable,alreadyguessed,progress,life,tobeguessed)
 
 def youvscpu():
@@ -161,7 +164,7 @@ def youvscpu():
     else:
         pass
 
-    #every letter in the alphabet is guessable until it has already been guessed
+    # Jeder Buchstabe im Alphabet kann geraten werden, bis er einmal geraten wurde.
     everyletter = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
     guessable = []
     alreadyguessed = []
@@ -175,23 +178,26 @@ def cpuvsyou(choice, life):
     length = ""
     counter = 0
 
+
+    # Die Datei muss eventuell neu eingetragen werden auf Zeile 185 und 208
+    # da sie manchmal nicht erkannt wird.
     
 
     if choice == str(1):
         #german wordlist https://theworld.com/~reinhold/diceware_german.txt
 
         file = open('Semesterprojekt/GermanWords.txt', 'r')
-        # .lower() returns a version with all upper case characters replaced with lower case characters.
+        # .lower() verwandelt alle Buchstaben in lowercase
         text = file.read().lower()
 
-        #close the file
+        #Textdatei wieder schließen
         file.close()
 
-        # replaces anything that is not a lowercase letter, a space, or an apostrophe with a space:
+        # ersetzt alles, was nicht lowercase ist
         text = re.sub('[^a-z\ \']+', " ", text)
         words = list(text.split())
 
-        #only be able to choose words above 5 and under 10 characters
+        #Nur Worte zur Auswahl stellen, die ueber 5 und unter 10 Buchstaben sind
         morethanfive = []
         for i in words:
             if len(i) >= 5 and len(i) < 10:     
@@ -203,19 +209,15 @@ def cpuvsyou(choice, life):
     elif choice == str(2):
         # english wordlist https://gist.github.com/deekayen/4148741
 
-        #might not work when just opening the file. PATH HAS TO BE REPLACED!
         file = open('Semesterprojekt/EnglishWords.txt', 'r')
-        # .lower() returns a version with all upper case characters replaced with lower case characters.
+       
         text = file.read().lower()
-
-        #close the file
+  
         file.close()
 
-        # replaces anything that is not a lowercase letter, a space, or an apostrophe with a space:
         text = re.sub('[^a-z\ \']+', " ", text)
         words = list(text.split())
 
-        #only be able to choose words above 5 characters
         morethanfive = []
         for i in words:
             if len(i) >= 5 and len(i) < 10:
@@ -226,15 +228,15 @@ def cpuvsyou(choice, life):
     wort = random.choice(morethanfive)
     tobeguessed = wort
 
-    tobeguessedarr = list(tobeguessed) #in ein array umwandeln um es lesbar zu machen mit buchstaben
+    tobeguessedarr = list(tobeguessed) #in ein Array umwandeln um es iterierbar zu machen
     
+    # Laenge des Wortes ausgeben also die Laenge des Wortes mit "_" ersetzen 
     for i in tobeguessed:
         length = length + "_"
         counter = counter+1
 
     
     print("Word has", counter, "letters: ", length)
-    #print(tobeguessedarr)       #weg machen 
 
     emptyarr = [""]*len(tobeguessed)
     alrguessed = []
@@ -261,7 +263,6 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr, alrguessed):
         else:
             gameover(tobeguessed)
 
-        #tobeguessed = []
         if guess == tobeguessed:
             celebration(life)
 
@@ -276,7 +277,7 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr, alrguessed):
                 
                 if guess == tobeguessedarr[i]:
                     
-                    print(guess, "is letter ", i+1)
+                    print(guess, "is letter ", i+1) # i+1, um die "richtige" Stelle dem Spieler zu sagen
 
                     buchstabe = tobeguessedarr[i]
 
@@ -284,7 +285,7 @@ def guessing(tobeguessed, life, tobeguessedarr,length, emptyarr, alrguessed):
                         print("You've already guessed that one!")
 
                     else:
-                        emptyarr[i] += buchstabe
+                        emptyarr[i] += buchstabe #den Buchtsaben an die richtige Stelle schreiben
 
                 
 

@@ -82,10 +82,6 @@ def cpuguess(everyletter,guessable,alreadyguessed,progress,life):
     
     logik(letter)
 
-   
-
-    
-
     print(f"so far: {progress}")
 
     if progress == tobeguessed:
