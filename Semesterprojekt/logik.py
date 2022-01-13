@@ -159,7 +159,7 @@ def mechanik(wort, sofar, wortarr, alrguessed):
                             superfilter.append(word)
 
     print("superfilter:",superfilter)
-
+    # superfilter stimmt nicht ganz, da auch Worte drin sind, die nicht drin sein dürften
 
 def start():
 

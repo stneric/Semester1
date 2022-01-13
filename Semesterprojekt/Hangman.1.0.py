@@ -186,7 +186,7 @@ def cpuvsyou(choice, life):
     if choice == str(1):
         #german wordlist https://theworld.com/~reinhold/diceware_german.txt
 
-        file = open('Semesterprojekt/GermanWords.txt', 'r')
+        file = open('GermanWords.txt', 'r')
         # .lower() verwandelt alle Buchstaben in lowercase
         text = file.read().lower()
 
@@ -209,7 +209,7 @@ def cpuvsyou(choice, life):
     elif choice == str(2):
         # english wordlist https://gist.github.com/deekayen/4148741
 
-        file = open('Semesterprojekt/EnglishWords.txt', 'r')
+        file = open('EnglishWords.txt', 'r')
        
         text = file.read().lower()
   
