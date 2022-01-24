@@ -32,12 +32,12 @@ int main(void) {
 	elem3->wert = 3;
 	elem3->next_elem = head;
 
-	elem3 = head;
+	head = elem3;
 
 	elem4->wert = 4;
 	elem4->next_elem = head;
 
-	elem4 = head;
+	head = elem4;
 
 	printf("%d, %d, %d, %d", elem1->wert, elem2->wert, elem3->wert, elem4->wert);
 
