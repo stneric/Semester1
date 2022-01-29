@@ -15,7 +15,7 @@ bbaum* erzeuge:knoten(int wert){
     if(k == NULL) {
         //Fehlerbehandlung
     }
-    assert(k != NULL);
+    assert(k != NULL); 
 
     k-> wert
 }
