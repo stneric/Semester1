@@ -6,4 +6,7 @@ int main(void){
     int** val = malloc(sizeof(int*) *10);
     // ZweiD array
 
+    printf("test");
+
+    return EXIT_SUCCESS;
 }
